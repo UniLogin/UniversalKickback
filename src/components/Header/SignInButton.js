@@ -8,6 +8,7 @@ import Button from '../Forms/Button'
 import Avatar from '../User/Avatar'
 import { CANNOT_RESOLVE_ACCOUNT_ADDRESS } from '../../utils/errors'
 import Assist from './Assist'
+import getWeb3 from '../../api/web3'
 
 const Account = styled(Link)`
   display: flex;
@@ -33,6 +34,11 @@ function SignInButton() {
     networkState,
     reloadUserAddress
   }) => async () => {
+    const web3 = await getWeb3()
+    const { waitForPick } = web3.currentProvider.web3picker.show()
+    await waitForPick()
+    networkState.readOnly = false
+
     hideTooltip()
     let assist = await Assist({
       action: 'Sign in',

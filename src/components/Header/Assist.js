@@ -5,12 +5,22 @@ import { track } from '../../api/analytics'
 
 const Assist = async ({ action, expectedNetworkId }) => {
   let web3
+  let result = {
+    status: 'Already on boarded',
+    action,
+    error: false,
+    fallback: false,
+    hasBalance: false
+  }
   try {
     web3 = await getWeb3()
   } catch (e) {
     console.log('failed to get web3')
   }
   // dappid is mandatory so will have throw away id for local usage.
+  if (web3.currentProvider.providerName === 'UniversalLogin') {
+    return result
+  }
   let testid = 'c212885d-e81d-416f-ac37-06d9ad2cf5af'
   let assistInstance = await assist.init({
     dappId: BLOCKNATIVE_DAPPID || testid,
@@ -28,13 +38,6 @@ const Assist = async ({ action, expectedNetworkId }) => {
     }
   })
   let state
-  let result = {
-    status: 'Already on boarded',
-    action,
-    error: false,
-    fallback: false,
-    hasBalance: false
-  }
 
   try {
     state = await assistInstance.getState()
