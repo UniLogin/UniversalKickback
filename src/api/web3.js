@@ -235,8 +235,8 @@ function setupWeb3(web3) {
         {
           name: 'UniversalLogin',
           icon: 'UniversalLogin logo',
-          create: () =>
-            new ULWeb3Provider({
+          create: async () => {
+            const ulProvider = new ULWeb3Provider({
               provider: new Web3.providers.HttpProvider(
                 'https://kovan.infura.io/v3/b3026fc5137a4bd18e5d5906ed49f77d'
               ),
@@ -248,6 +248,9 @@ function setupWeb3(web3) {
                 type: 'laptop'
               }
             })
+            await ulProvider.init()
+            return ulProvider
+          }
         },
         {
           create: () => provider,
