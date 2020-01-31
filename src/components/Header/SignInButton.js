@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'react-emotion'
 import { Link } from 'react-router-dom'
 
@@ -27,6 +27,7 @@ const Username = styled('div')`
 `
 
 function SignInButton() {
+  const ulButton = useRef(null)
   const _signIn = ({
     showTooltip,
     hideTooltip,
@@ -38,7 +39,9 @@ function SignInButton() {
     const { waitForPick } = web3.currentProvider.web3picker.show()
     await waitForPick()
     networkState.readOnly = false
-
+    if (web3.currentProvider.providerName === 'UniversalLogin') {
+      web3.currentProvider.currentProvider.initWeb3Button(ulButton.current)
+    }
     hideTooltip()
     let assist = await Assist({
       action: 'Sign in',
@@ -68,41 +71,52 @@ function SignInButton() {
           userProfile &&
           userProfile.social &&
           userProfile.social.find(s => s.type === 'twitter')
-        return loggedIn && userProfile ? (
+        return (
           <>
-            {/* <Notifications>Notification</Notifications> */}
-            <Account to={`/user/${userProfile.username}`}>
-              {userProfile ? (
-                <Username data-testid="userprofile-name">
-                  {userProfile.username}
-                </Username>
-              ) : null}
-              <Avatar
-                src={`https://avatars.io/twitter/${
-                  twitterProfile ? twitterProfile.value : 'unknowntwitter123abc'
-                }/medium`}
-              />
-            </Account>
-          </>
-        ) : (
-          <Tooltip text={CANNOT_RESOLVE_ACCOUNT_ADDRESS} position="left">
-            {({ tooltipElement, showTooltip, hideTooltip }) => (
-              <Button
-                type="light"
-                onClick={_signIn({
-                  showTooltip,
-                  hideTooltip,
-                  signIn,
-                  reloadUserAddress,
-                  networkState
-                })}
-                analyticsId="Sign In"
-              >
-                {tooltipElement}
-                Sign in
-              </Button>
+            {loggedIn && userProfile ? (
+              <>
+                {/* <Notifications>Notification</Notifications> */}
+                <Account to={`/user/${userProfile.username}`}>
+                  {userProfile ? (
+                    <Username data-testid="userprofile-name">
+                      {userProfile.username}
+                    </Username>
+                  ) : null}
+                  <Avatar
+                    src={`https://avatars.io/twitter/${
+                      twitterProfile
+                        ? twitterProfile.value
+                        : 'unknowntwitter123abc'
+                    }/medium`}
+                  />
+                </Account>
+              </>
+            ) : (
+              <Tooltip text={CANNOT_RESOLVE_ACCOUNT_ADDRESS} position="left">
+                {({ tooltipElement, showTooltip, hideTooltip }) => (
+                  <Button
+                    type="light"
+                    onClick={_signIn({
+                      showTooltip,
+                      hideTooltip,
+                      signIn,
+                      reloadUserAddress,
+                      networkState
+                    })}
+                    analyticsId="Sign In"
+                  >
+                    {tooltipElement}
+                    Sign in
+                  </Button>
+                )}
+              </Tooltip>
             )}
-          </Tooltip>
+            <div
+              ref={ref => {
+                ulButton.current = ref
+              }}
+            />
+          </>
         )
       }}
     </GlobalConsumer>
