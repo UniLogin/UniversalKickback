@@ -5,13 +5,6 @@ import { track } from '../../api/analytics'
 
 const Assist = async ({ action, expectedNetworkId }) => {
   let web3
-  let result = {
-    status: 'Already on boarded',
-    action,
-    error: false,
-    fallback: false,
-    hasBalance: false
-  }
   try {
     web3 = await getWeb3()
   } catch (e) {
@@ -35,6 +28,13 @@ const Assist = async ({ action, expectedNetworkId }) => {
     }
   })
   let state
+  let result = {
+    status: 'Already on boarded',
+    action,
+    error: false,
+    fallback: false,
+    hasBalance: false
+  }
 
   try {
     state = await assistInstance.getState()
