@@ -8,7 +8,7 @@ import { NEW_BLOCK } from '../utils/events'
 import { clientInstance } from '../graphql'
 import { NETWORK_ID_QUERY } from '../graphql/queries'
 import { lazyAsync } from './utils'
-import { Web3Strategy, ULWeb3Provider } from '@universal-login/web3'
+import UniLogin from '@universal-login/web3'
 
 let networkState = {}
 let localEndpoint = false
@@ -193,21 +193,12 @@ const getWeb3 = lazyAsync(async () => {
     }
 
     pollForBlocks(web3)
-    setupWeb3(web3)
-    // if web3 not set then something failed
-    if (!web3) {
-      networkState.allGood = false
-      throw new Error('Error setting up web3')
+    const applicationInfo = {
+      applicationName: 'Kickback',
+      logo: 'https://kickback.events/favicon.ico',
+      type: 'laptop'
     }
-    // poll for blocks
-    setInterval(async () => {
-      try {
-        const block = await web3.eth.getBlock('latest')
-        events.emit(NEW_BLOCK, block)
-      } catch (__) {
-        /* nothing to do */
-      }
-    }, 10000)
+    UniLogin.setupWeb3Picker(web3, ['UniLogin', 'Metamask'], applicationInfo)
   } catch (err) {
     console.warn(err)
     web3 = null
@@ -226,42 +217,6 @@ export const getWeb3Read = lazyAsync(async () => {
   }
   return connectToCloudNode()
 })
-
-function setupWeb3(web3) {
-  const provider = web3.currentProvider
-  web3.setProvider(
-    new Web3Strategy(
-      [
-        {
-          name: 'UniversalLogin',
-          icon: 'UniversalLogin logo',
-          create: async () => {
-            const ulProvider = new ULWeb3Provider({
-              provider: new Web3.providers.HttpProvider(
-                'https://kovan.infura.io/v3/b3026fc5137a4bd18e5d5906ed49f77d'
-              ),
-              relayerUrl: 'https://relayer-kovan.herokuapp.com',
-              ensDomains: ['poppularapp.test'],
-              applicationInfo: {
-                applicationName: 'Kickback',
-                logo: 'https://kickback.events/favicon.ico',
-                type: 'laptop'
-              }
-            })
-            await ulProvider.init()
-            return ulProvider
-          }
-        },
-        {
-          create: () => provider,
-          icon: 'Kickback icon',
-          name: 'Kickback default provider'
-        }
-      ],
-      provider
-    )
-  )
-}
 
 export async function getDeployerAddress() {
   // if local env doesn't specify address then assume we're on a public net
