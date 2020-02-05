@@ -36,8 +36,7 @@ function SignInButton() {
     reloadUserAddress
   }) => async () => {
     const web3 = await getWeb3()
-    const { waitForPick } = web3.currentProvider.web3picker.show()
-    await waitForPick()
+    await web3.currentProvider.web3picker.show().waitForPick()
     networkState.readOnly = false
     if (web3.currentProvider.providerName === 'UniversalLogin') {
       web3.currentProvider.currentProvider.initWeb3Button(ulButton.current)
