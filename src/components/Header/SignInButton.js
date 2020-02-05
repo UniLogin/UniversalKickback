@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import styled from 'react-emotion'
 import { Link } from 'react-router-dom'
 
@@ -27,7 +27,6 @@ const Username = styled('div')`
 `
 
 function SignInButton() {
-  const ulButton = useRef(null)
   const _signIn = ({
     showTooltip,
     hideTooltip,
@@ -39,7 +38,9 @@ function SignInButton() {
     await web3.currentProvider.web3picker.show().waitForPick()
     networkState.readOnly = false
     if (web3.currentProvider.providerName === 'UniversalLogin') {
-      web3.currentProvider.currentProvider.initWeb3Button(ulButton.current)
+      web3.currentProvider.currentProvider.initWeb3Button(
+        document.getElementById('ul-btn')
+      )
     }
     hideTooltip()
     let assist = await Assist({
@@ -110,11 +111,7 @@ function SignInButton() {
                 )}
               </Tooltip>
             )}
-            <div
-              ref={ref => {
-                ulButton.current = ref
-              }}
-            />
+            <div id="ul-btn" />
           </>
         )
       }}
