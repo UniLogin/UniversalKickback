@@ -8,6 +8,7 @@ import { NEW_BLOCK } from '../utils/events'
 import { clientInstance } from '../graphql'
 import { NETWORK_ID_QUERY } from '../graphql/queries'
 import { lazyAsync } from './utils'
+import UniLogin from '@universal-login/web3'
 
 let networkState = {}
 let localEndpoint = false
@@ -192,6 +193,7 @@ const getWeb3 = lazyAsync(async () => {
     }
 
     pollForBlocks(web3)
+    UniLogin.setupWeb3Picker(web3, ['UniLogin', 'Metamask'])
   } catch (err) {
     console.warn(err)
     web3 = null

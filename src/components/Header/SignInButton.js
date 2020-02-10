@@ -8,6 +8,7 @@ import Button from '../Forms/Button'
 import Avatar from '../User/Avatar'
 import { CANNOT_RESOLVE_ACCOUNT_ADDRESS } from '../../utils/errors'
 import Assist from './Assist'
+import getWeb3 from '../../api/web3'
 
 const Account = styled(Link)`
   display: flex;
@@ -33,6 +34,12 @@ function SignInButton() {
     networkState,
     reloadUserAddress
   }) => async () => {
+    const web3 = await getWeb3()
+    await web3.currentProvider.show()
+    networkState.readOnly = false
+    if (web3.currentProvider.providerName === 'UniversalLogin') {
+      web3.currentProvider.currentProvider.initWeb3Button()
+    }
     hideTooltip()
     let assist = await Assist({
       action: 'Sign in',
