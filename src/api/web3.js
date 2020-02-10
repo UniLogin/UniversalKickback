@@ -193,12 +193,7 @@ const getWeb3 = lazyAsync(async () => {
     }
 
     pollForBlocks(web3)
-    const applicationInfo = {
-      applicationName: 'Kickback',
-      logo: 'https://kickback.events/favicon.ico',
-      type: 'laptop'
-    }
-    UniLogin.setupWeb3Picker(web3, ['UniLogin', 'Metamask'], applicationInfo)
+    UniLogin.setupWeb3Picker(web3, ['UniLogin', 'Metamask'])
   } catch (err) {
     console.warn(err)
     web3 = null

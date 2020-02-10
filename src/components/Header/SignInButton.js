@@ -38,9 +38,7 @@ function SignInButton() {
     await web3.currentProvider.web3picker.show().waitForPick()
     networkState.readOnly = false
     if (web3.currentProvider.providerName === 'UniversalLogin') {
-      web3.currentProvider.currentProvider.initWeb3Button(
-        document.getElementById('ul-btn')
-      )
+      web3.currentProvider.currentProvider.initWeb3Button()
     }
     hideTooltip()
     let assist = await Assist({
