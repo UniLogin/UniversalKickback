@@ -1,6 +1,7 @@
 import { Deployer } from '@wearekickback/contracts'
 import Web3 from 'web3'
 import EventEmitter from 'eventemitter3'
+import ULProvider from '@universal-login/provider'
 
 import { DEPLOYER_CONTRACT_ADDRESS, DAI_CONTRACT_ADDRESS } from '../config'
 import { getProvider } from '../GlobalState'
@@ -182,6 +183,7 @@ const getWeb3 = lazyAsync(async () => {
       }
     }
 
+    web3.setProvider(ULProvider.createPicker(web3.currentProvider))
     const { networkId, networkName } = await getNetworkId(web3)
     networkState.networkId = networkId
     networkState.networkName = networkName
