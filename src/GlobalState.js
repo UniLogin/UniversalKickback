@@ -3,22 +3,14 @@ import React, { createContext, Component } from 'react'
 import { withApollo } from 'react-apollo'
 import jwt from 'jsonwebtoken'
 import Web3 from 'web3'
-import Onboard from 'bnc-onboard'
 
-import { track } from './api/analytics'
-import {
-  BLOCKNATIVE_DAPPID,
-  INFURA_KEY,
-  FORTMATIC_KEY,
-  PORTIS_KEY
-  // SQUARELINK_KEY
-} from './config'
 import { identify as logRocketIdentify } from './api/logRocket'
 import * as LocalStorage from './api/localStorage'
 import { getAccount, updateNetwork, pollForBlocks } from './api/web3'
 import { SIGN_IN } from './modals'
 import { LOGIN_USER_NO_AUTH } from './graphql/mutations'
 import { buildAuthHeaders } from './utils/requests'
+import ULIFrameProvider from '@unilogin/provider'
 
 const GlobalContext = createContext({})
 
@@ -42,46 +34,6 @@ const AUTH = 'auth'
 const WALLET = 'wallet'
 const TOKEN_SECRET = 'kickback'
 const TOKEN_ALGORITHM = 'HS256'
-
-const walletChecks = [{ checkName: 'connect' }, { checkName: 'network' }]
-
-const wallets = [
-  { walletName: 'authereum', preferred: true },
-  { walletName: 'coinbase', preferred: true },
-  {
-    walletName: 'fortmatic',
-    apiKey: FORTMATIC_KEY,
-    preferred: true
-  },
-  { walletName: 'metamask', preferred: true },
-  { walletName: 'opera', preferred: true },
-  { walletName: 'operaTouch', preferred: true },
-  {
-    walletName: 'portis',
-    apiKey: PORTIS_KEY,
-    preferred: true
-  },
-  { walletName: 'status', preferred: true },
-  {
-    walletName: 'torus',
-    buildEnv: 'production',
-    showTorusButton: false,
-    preferred: true
-  },
-  { walletName: 'trust', preferred: true },
-  {
-    walletName: 'walletConnect',
-    infuraKey: INFURA_KEY,
-    preferred: true
-  }
-  // Disabled as it throws an error message
-  // {
-  //   walletName: 'squarelink',
-  //   apiKey: SQUARELINK_KEY
-  // }
-  // Disabled as it throws an error message
-  // { walletName: 'dapper' }
-]
 
 class Provider extends Component {
   state = {
@@ -112,25 +64,6 @@ class Provider extends Component {
       return null
     }
 
-    let { onboard } = this.state
-
-    if (!onboard) {
-      // dappid is mandatory so will have throw away id for local usage.
-      let testid = 'c212885d-e81d-416f-ac37-06d9ad2cf5af'
-      onboard = Onboard({
-        dappId: BLOCKNATIVE_DAPPID || testid,
-        networkId: parseInt(networkId),
-        walletCheck: walletChecks,
-        walletSelect: {
-          heading: 'Select a wallet to connect to Kickback',
-          description:
-            'To use Kickback you need an Ethereum wallet. Please select one from below:',
-          wallets: wallets
-        }
-      })
-      this.setState({ onboard })
-    }
-
     let result = {
       action,
       error: false,
@@ -138,60 +71,9 @@ class Provider extends Component {
       expectedNetworkId: networkId
     }
 
-    let web3
-    try {
-      const selected = await onboard.walletSelect(lastUsedWallet)
-      if (selected) {
-        const ready = await onboard.walletCheck()
-        if (ready) {
-          const walletState = onboard.getState()
-          let {
-            address,
-            network,
-            balance,
-            wallet,
-            mobileDevice
-            // appNetworkId
-          } = walletState
-
-          // Save this wallet provider for next login
-          LocalStorage.setItem(WALLET, wallet.name)
-
-          const web3 = new Web3(wallet.provider)
-          this.setState({ wallet, web3 })
-
-          result = {
-            mobileDevice,
-            network,
-            address,
-            walletName: wallet.name,
-            ...result
-          }
-
-          result.correctNetwork = network === parseInt(networkId)
-
-          // We want to know whether the users have any balances in their walllet
-          // but don't want to know how much they do.
-          result.hasBalance = parseInt(balance || 0) > 0
-          pollForBlocks(web3)
-        } else {
-          // Connection to wallet failed
-          LocalStorage.removeItem(WALLET)
-          result.status = 'aborted'
-          result.error = true
-        }
-      } else {
-        // User aborted set up
-        LocalStorage.removeItem(WALLET)
-        result.status = 'aborted'
-        result.error = true
-      }
-    } catch (error) {
-      console.log('error onboarding', error)
-      result.status = error
-      result.error = true
-    }
-    track('Connect to web3', result)
+    const provider = ULIFrameProvider.createPicker(window.ethereum)
+    const web3 = new Web3(provider)
+    this.setState({ wallet: { name: 'UniLogin' }, web3 })
     return web3
   }
 

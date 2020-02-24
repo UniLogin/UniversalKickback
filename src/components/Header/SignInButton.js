@@ -28,6 +28,7 @@ const UserProfileButton = ({ userProfile }) => {
     <Account to={`/user/${userProfile.username}`}>
       <Username data-testid="userprofile-name">{userProfile.username}</Username>
       <TwitterAvatar user={userProfile} size={10} scale={4} />
+      <button id="unilogin-button"></button>
     </Account>
   )
 }
