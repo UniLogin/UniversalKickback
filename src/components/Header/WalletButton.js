@@ -59,47 +59,47 @@ function WalletButton() {
             </CTAButton>
           )
         }
-        return (
-          <WalletWrapper>
-            <Button type="light" onClick={toggleMenu}>
-              Connected with {wallet.name}
-            </Button>
-
-            {showMenu ? (
-              <Menu>
-                <List>
-                  <ListItem>
-                    <EtherScanLink address={userAddress}>
-                      {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
-                    </EtherScanLink>
-                  </ListItem>
-                  {wallet.url && (
-                    <ListItem>
-                      <Link
-                        href={wallet.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open Wallet
-                      </Link>
-                    </ListItem>
-                  )}
-                  <ListItem>
-                    <Link
-                      href="#"
-                      onClick={() => {
-                        setShowMenu(false)
-                        signOut()
-                      }}
-                    >
-                      Disconnect Wallet
-                    </Link>
-                  </ListItem>
-                </List>
-              </Menu>
-            ) : null}
-          </WalletWrapper>
-        )
+        // return (
+        //   <WalletWrapper>
+        //     <Button type="light" onClick={toggleMenu}>
+        //       Connected with {wallet.name}
+        //     </Button>
+        //
+        //     {showMenu ? (
+        //       <Menu>
+        //         <List>
+        //           <ListItem>
+        //             <EtherScanLink address={userAddress}>
+        //               {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
+        //             </EtherScanLink>
+        //           </ListItem>
+        //           {wallet.url && (
+        //             <ListItem>
+        //               <Link
+        //                 href={wallet.url}
+        //                 target="_blank"
+        //                 rel="noopener noreferrer"
+        //               >
+        //                 Open Wallet
+        //               </Link>
+        //             </ListItem>
+        //           )}
+        //           <ListItem>
+        //             <Link
+        //               href="#"
+        //               onClick={() => {
+        //                 setShowMenu(false)
+        //                 signOut()
+        //               }}
+        //             >
+        //               Disconnect Wallet
+        //             </Link>
+        //           </ListItem>
+        //         </List>
+        //       </Menu>
+        //     ) : null}
+        //   </WalletWrapper>
+        // )
       }}
     </GlobalConsumer>
   )
