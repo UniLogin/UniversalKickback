@@ -122,13 +122,19 @@ export const pollForBlocks = web3 => {
 const getWeb3 = async () => {
   let web3
 
-  const { expectedNetworkId } = await getExpectedNetworkId()
+  const {
+    expectedNetworkId,
+    expectedNetworkName
+  } = await getExpectedNetworkId()
 
   try {
     const { state } = await getProvider()
     web3 = state.web3
-    const { networkId } = await getNetworkId(web3)
+    const { networkId, networkName } = await getNetworkId(web3)
     if (networkId !== expectedNetworkId) {
+      alert(
+        `Your metamask plugin is connected to a different network. You are on ${networkName}. Please connect to ${expectedNetworkName}.`
+      )
       throw new Error('Existing web3 is not on correct network')
     }
   } catch (err) {
