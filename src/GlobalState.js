@@ -64,8 +64,18 @@ class Provider extends Component {
       return null
     }
 
-    const provider = ULIFrameProvider.createPicker(window.ethereum)
+    const provider = ULIFrameProvider.createPicker(
+      window.ethereum || networkId.toString()
+    )
     const web3 = new Web3(provider)
+    await new Promise(resolve =>
+      provider.send(
+        {
+          method: 'eth_requestAccounts'
+        },
+        resolve
+      )
+    )
     this.setState({ wallet: { name: 'UniLogin' }, web3 })
     return web3
   }

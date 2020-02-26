@@ -1825,13 +1825,13 @@
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha512-te5lMAWii1uEJ4FwLjzdlbw3+n0FZNOvFXHxQDKeT0dilh7HOzdMzV2TrJVUzq8ep7J4Na8OUYPRLSQkJHAlrg==
 
-"@unilogin/provider@^0.5.11":
-  version "0.5.11"
-  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.11.tgz#0b7526ac07d006489dbe1546772b89920281b8b2"
-  integrity sha512-lP00vjS6a0xFkuiGJgXTG/UoZ4gK8gvwdvglmzEd5jjltbpeE/9V3pKzb/NWvpHnp9zunckTiC2WgGFAt+0yiQ==
+"@unilogin/provider@^0.5.12":
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.12.tgz#e3f1158d75319200b73004b32994f698b265bffb"
+  integrity sha512-VIA5DFFTzMNMqYKcoPBPU3kuN77bxlnmnSekrcBwABfN/e6muk2V2wwBryRK0iY8oq8Mw56QUDMktbNfoeebXg==
   dependencies:
     "@restless/sanitizers" "^0.2.3"
-    reactive-properties "^0.1.9"
+    reactive-properties "^0.1.10"
 
 "@walletconnect/browser@^1.0.0-beta.47":
   version "1.0.0-beta.47"
@@ -14617,7 +14617,7 @@ react@^16.8.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactive-properties@^0.1.9:
+reactive-properties@^0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/reactive-properties/-/reactive-properties-0.1.10.tgz#acaf18f7e1ef1ad5858514f1016faed5549894de"
   integrity sha512-b6kLPVZLub4XudGD/gLVAs+A1hAXqUwl1P/+j4dzL8y6Wsb9KghgX2Iaul35zh6DO6z0DgAYNC9W7i6IG/T3yg==
