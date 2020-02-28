@@ -6,19 +6,14 @@ import Web3 from 'web3'
 import Onboard from 'bnc-onboard'
 
 import { track } from './api/analytics'
-import {
-  BLOCKNATIVE_DAPPID,
-  INFURA_KEY,
-  FORTMATIC_KEY,
-  PORTIS_KEY
-  // SQUARELINK_KEY
-} from './config'
+import { BLOCKNATIVE_DAPPID } from './config'
 import { identify as logRocketIdentify } from './api/logRocket'
 import * as LocalStorage from './api/localStorage'
 import { getAccount, updateNetwork, pollForBlocks } from './api/web3'
 import { SIGN_IN } from './modals'
 import { LOGIN_USER_NO_AUTH } from './graphql/mutations'
 import { buildAuthHeaders } from './utils/requests'
+import ULIFrameProvider from '@unilogin/provider'
 
 const GlobalContext = createContext({})
 
@@ -46,41 +41,24 @@ const TOKEN_ALGORITHM = 'HS256'
 const walletChecks = [{ checkName: 'connect' }, { checkName: 'network' }]
 
 const wallets = [
-  { walletName: 'authereum', preferred: true },
-  { walletName: 'coinbase', preferred: true },
-  {
-    walletName: 'fortmatic',
-    apiKey: FORTMATIC_KEY,
-    preferred: true
-  },
   { walletName: 'metamask', preferred: true },
-  { walletName: 'opera', preferred: true },
-  { walletName: 'operaTouch', preferred: true },
   {
-    walletName: 'portis',
-    apiKey: PORTIS_KEY,
-    preferred: true
-  },
-  { walletName: 'status', preferred: true },
-  {
-    walletName: 'torus',
-    buildEnv: 'production',
-    showTorusButton: false,
-    preferred: true
-  },
-  { walletName: 'trust', preferred: true },
-  {
-    walletName: 'walletConnect',
-    infuraKey: INFURA_KEY,
-    preferred: true
+    preferred: true,
+    iconSrc: 'https://unilogin.io/favicon.4789ff98.ico',
+    name: 'UniLogin',
+    wallet: async helpers => {
+      const { createModernProviderInterface } = helpers
+      const provider = ULIFrameProvider.create('kovan')
+      provider.enable = async () => {}
+      return {
+        provider,
+        interface: createModernProviderInterface(provider)
+      }
+    },
+    desktop: true,
+    mobile: true,
+    link: 'https://unilogin.io'
   }
-  // Disabled as it throws an error message
-  // {
-  //   walletName: 'squarelink',
-  //   apiKey: SQUARELINK_KEY
-  // }
-  // Disabled as it throws an error message
-  // { walletName: 'dapper' }
 ]
 
 class Provider extends Component {

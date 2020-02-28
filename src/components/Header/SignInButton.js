@@ -37,14 +37,19 @@ function SignInButton() {
     <GlobalConsumer>
       {({ userProfile, loggedIn, signIn, wallet }) => {
         if (!wallet) return null
-
-        if (loggedIn && userProfile) {
-          return <UserProfileButton userProfile={userProfile} />
-        }
         return (
-          <Button type="light" onClick={signIn} analyticsId="Sign In">
-            Sign in
-          </Button>
+          <>
+            {wallet.name === 'UniLogin' && (
+              <button id="unilogin-button"></button>
+            )}
+            {loggedIn && userProfile ? (
+              <UserProfileButton userProfile={userProfile} />
+            ) : (
+              <Button type="light" onClick={signIn} analyticsId="Sign In">
+                Sign in
+              </Button>
+            )}
+          </>
         )
       }}
     </GlobalConsumer>
