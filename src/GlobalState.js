@@ -40,27 +40,6 @@ const TOKEN_ALGORITHM = 'HS256'
 
 const walletChecks = [{ checkName: 'connect' }, { checkName: 'network' }]
 
-const wallets = [
-  { walletName: 'metamask', preferred: true },
-  {
-    preferred: true,
-    iconSrc: 'https://unilogin.io/favicon.4789ff98.ico',
-    name: 'UniLogin',
-    wallet: async helpers => {
-      const { createModernProviderInterface } = helpers
-      const provider = ULIFrameProvider.create('kovan')
-      provider.enable = async () => {}
-      return {
-        provider,
-        interface: createModernProviderInterface(provider)
-      }
-    },
-    desktop: true,
-    mobile: true,
-    link: 'https://unilogin.io'
-  }
-]
-
 class Provider extends Component {
   state = {
     apolloClient: this.props.client,
@@ -103,7 +82,26 @@ class Provider extends Component {
           heading: 'Select a wallet to connect to Kickback',
           description:
             'To use Kickback you need an Ethereum wallet. Please select one from below:',
-          wallets: wallets
+          wallets: [
+            { walletName: 'metamask', preferred: true },
+            {
+              preferred: true,
+              iconSrc: 'https://unilogin.io/favicon.4789ff98.ico',
+              name: 'UniLogin',
+              wallet: async helpers => {
+                const { createModernProviderInterface } = helpers
+                const provider = ULIFrameProvider.create(networkId)
+                provider.enable = async () => {}
+                return {
+                  provider,
+                  interface: createModernProviderInterface(provider)
+                }
+              },
+              desktop: true,
+              mobile: true,
+              link: 'https://unilogin.io'
+            }
+          ]
         }
       })
       this.setState({ onboard })
