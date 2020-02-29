@@ -1357,10 +1357,10 @@
     penpal "3.0.7"
     pocket-js-core "0.0.3"
 
-"@restless/sanitizers@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.3.tgz#e73412397c94c94da55c5a3dbf35eaecd6dfe257"
-  integrity sha512-RoBmMXFJ43m/slRz543TZjbTgGHXnpi23iviU4oZ+3W78d1y/IaVSk7lJ0+CcgeA54OGsHPnPSkPv4hOEQUH3A==
+"@restless/sanitizers@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.4.tgz#726ea5607f1bf7e327df266e180b2702e3ffe587"
+  integrity sha512-BqEF+7YEPSvmM8xp5R1uM5hpf87wzVdzSK7rr323bjxM6JBQcBE2w1i6KXpYq2GEJ2Z9BIFSAbRs7jGAtgeJxw==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
@@ -1825,12 +1825,12 @@
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha512-te5lMAWii1uEJ4FwLjzdlbw3+n0FZNOvFXHxQDKeT0dilh7HOzdMzV2TrJVUzq8ep7J4Na8OUYPRLSQkJHAlrg==
 
-"@unilogin/provider@^0.5.12":
-  version "0.5.12"
-  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.12.tgz#e3f1158d75319200b73004b32994f698b265bffb"
-  integrity sha512-VIA5DFFTzMNMqYKcoPBPU3kuN77bxlnmnSekrcBwABfN/e6muk2V2wwBryRK0iY8oq8Mw56QUDMktbNfoeebXg==
+"@unilogin/provider@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.13.tgz#3935c23d740c0d055b9d104e2e493429e3d9a564"
+  integrity sha512-HiVCiBYwSZ51T9cuqYffzi6wZccIUtAIxOEMvRxsn2qZtDHmQV8LLkyqhnMr7HThPUrOOJXnAlUqtlzeObJ6pA==
   dependencies:
-    "@restless/sanitizers" "^0.2.3"
+    "@restless/sanitizers" "^0.2.4"
     reactive-properties "^0.1.10"
 
 "@walletconnect/browser@^1.0.0-beta.47":
