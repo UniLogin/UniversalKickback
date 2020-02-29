@@ -90,7 +90,7 @@ class Provider extends Component {
               name: 'UniLogin',
               wallet: async helpers => {
                 const { createModernProviderInterface } = helpers
-                const provider = ULIFrameProvider.create(networkId)
+                const provider = ULIFrameProvider.create(networkId || 'mainnet')
                 provider.enable = async () => {}
                 return {
                   provider,
