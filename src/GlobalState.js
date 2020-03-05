@@ -85,16 +85,20 @@ class Provider extends Component {
           wallets: [
             { walletName: 'metamask', preferred: true },
             {
+              name: 'UniLogin',
               preferred: true,
               iconSrc: 'https://unilogin.io/favicon.4789ff98.ico',
-              name: 'UniLogin',
               wallet: async helpers => {
-                const { createModernProviderInterface } = helpers
+                const { createLegacyProviderInterface } = helpers
                 const provider = ULIFrameProvider.create(networkId || 'mainnet')
-                provider.enable = async () => {}
                 return {
                   provider,
-                  interface: createModernProviderInterface(provider)
+                  interface: {
+                    ...createLegacyProviderInterface(provider),
+                    connect: () =>
+                      provider.send({ method: 'eth_requestAccounts' }),
+                    loading: provider.waitUntilReady()
+                  }
                 }
               },
               desktop: true,
