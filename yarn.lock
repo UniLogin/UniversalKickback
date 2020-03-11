@@ -1825,10 +1825,10 @@
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha512-te5lMAWii1uEJ4FwLjzdlbw3+n0FZNOvFXHxQDKeT0dilh7HOzdMzV2TrJVUzq8ep7J4Na8OUYPRLSQkJHAlrg==
 
-"@unilogin/provider@^0.5.16":
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.16.tgz#6633901ab5119e4aae291d3ecd181e4c7eb02a39"
-  integrity sha512-tjvEUJhedUfhDMhYZdqcXXInOFsZotSQC8PE9bC8mAmZTh7K1STSipg7qs8gvUCmzZ0Lii5vSTQsqbTPpveFJA==
+"@unilogin/provider@^0.5.17":
+  version "0.5.17"
+  resolved "https://registry.yarnpkg.com/@unilogin/provider/-/provider-0.5.17.tgz#984100ca1cc06a603fcf65fd3e2a3c8e0b6c08f7"
+  integrity sha512-zzlI5X/uSaJn+/fQXVaOKhOT9voyWrlWET0G7KyjD7JLWOMw0/y/RrgoKc23l6mm2+5XFN/5lttj/eGOxRoi5A==
   dependencies:
     "@restless/sanitizers" "^0.2.4"
     reactive-properties "^0.1.10"
