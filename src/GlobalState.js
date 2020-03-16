@@ -97,7 +97,9 @@ class Provider extends Component {
                     ...createLegacyProviderInterface(provider),
                     connect: () =>
                       new Promise(resolve =>
-                        provider.send({ method: 'ul_connect' }, () => resolve())
+                        provider.send({ method: 'eth_requestAccounts' }, () =>
+                          resolve()
+                        )
                       ),
                     loading: provider.waitUntilReady(),
                     disconnect: () =>
