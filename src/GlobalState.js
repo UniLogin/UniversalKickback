@@ -13,7 +13,6 @@ import { getAccount, updateNetwork, pollForBlocks } from './api/web3'
 import { SIGN_IN } from './modals'
 import { LOGIN_USER_NO_AUTH } from './graphql/mutations'
 import { buildAuthHeaders } from './utils/requests'
-import ULIFrameProvider from '@unilogin/provider'
 
 const GlobalContext = createContext({})
 
@@ -84,32 +83,7 @@ class Provider extends Component {
             'To use Kickback you need an Ethereum wallet. Please select one from below:',
           wallets: [
             { walletName: 'metamask', preferred: true },
-            {
-              name: 'UniLogin',
-              preferred: true,
-              iconSrc: 'https://unilogin.io/favicon.4789ff98.ico',
-              wallet: async helpers => {
-                const { createLegacyProviderInterface } = helpers
-                const provider = ULIFrameProvider.create(networkId || 'mainnet')
-                return {
-                  provider,
-                  interface: {
-                    ...createLegacyProviderInterface(provider),
-                    connect: () => provider.enable(),
-                    loading: provider.waitUntilReady(),
-                    disconnect: () =>
-                      new Promise(resolve =>
-                        provider.send({ method: 'ul_disconnect' }, () =>
-                          resolve()
-                        )
-                      )
-                  }
-                }
-              },
-              desktop: true,
-              mobile: true,
-              link: 'https://unilogin.io'
-            }
+            { walletName: 'unilogin', preferred: true }
           ]
         }
       })
