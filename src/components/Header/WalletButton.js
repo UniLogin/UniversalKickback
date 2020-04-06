@@ -62,42 +62,36 @@ function WalletButton() {
             </CTAButton>
           )
         }
-        if (!loggedIn || !userProfile) {
-          return (
-            <WalletWrapper>
-              <Button
-                type="light"
-                onClick={() => {
-                  setShowMenu(false)
-                  signOut()
-                }}
-              >
-                Disconnect {wallet.name}
-              </Button>
-            </WalletWrapper>
-          )
-        }
+
         return (
           <WalletWrapper>
             <CTAButton type="light" onClick={toggleMenu}>
-              <UserProfileButton userProfile={userProfile} />
+              {loggedIn && userProfile ? (
+                <UserProfileButton userProfile={userProfile} />
+              ) : (
+                <>Manage your wallet</>
+              )}
             </CTAButton>
             {showMenu ? (
               <Menu>
                 <List>
-                  <ListItem>
-                    <EtherScanLink address={userAddress}>
-                      {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
-                    </EtherScanLink>
-                  </ListItem>
-                  <ListItem>
-                    <Link
-                      href={`/user/${userProfile.username}`}
-                      rel="noopener noreferrer"
-                    >
-                      Open Profile
-                    </Link>
-                  </ListItem>
+                  {userAddress && (
+                    <ListItem>
+                      <EtherScanLink address={userAddress}>
+                        {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
+                      </EtherScanLink>
+                    </ListItem>
+                  )}
+                  {loggedIn && userProfile && (
+                    <ListItem>
+                      <Link
+                        href={`/user/${userProfile.username}`}
+                        rel="noopener noreferrer"
+                      >
+                        Open Profile
+                      </Link>
+                    </ListItem>
+                  )}
                   {wallet.type === 'sdk' && wallet.dashboard && (
                     <ListItem>
                       <Link
