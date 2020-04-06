@@ -36,6 +36,7 @@ const ListItem = styled('li')`
 
 const Link = styled('a')`
   color: ${c.primary400};
+  cursor: pointer;
 `
 
 const CTAButton = styled(Button)`
@@ -64,7 +65,6 @@ function WalletButton() {
             <Button type="light" onClick={toggleMenu}>
               Connected with {wallet.name}
             </Button>
-
             {showMenu ? (
               <Menu>
                 <List>
@@ -73,7 +73,17 @@ function WalletButton() {
                       {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
                     </EtherScanLink>
                   </ListItem>
-                  {wallet.url && (
+                  {wallet.type === 'sdk' && wallet.dashboard && (
+                    <ListItem>
+                      <Link
+                        onClick={wallet.dashboard}
+                        rel="noopener noreferrer"
+                      >
+                        Open Dashboard
+                      </Link>
+                    </ListItem>
+                  )}
+                  {wallet.dashboard && wallet.url && (
                     <ListItem>
                       <Link
                         href={wallet.url}

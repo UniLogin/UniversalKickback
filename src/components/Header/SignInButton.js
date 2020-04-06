@@ -39,9 +39,6 @@ function SignInButton() {
         if (!wallet) return null
         return (
           <>
-            {wallet.name === 'UniLogin' && (
-              <button id="unilogin-button"></button>
-            )}
             {loggedIn && userProfile ? (
               <UserProfileButton userProfile={userProfile} />
             ) : (
