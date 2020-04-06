@@ -5,8 +5,8 @@ import { getSocialId } from '@wearekickback/shared'
 import DefaultAvatar from './Avatar'
 
 const Avatar = styled(DefaultAvatar)`
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   flex-shrink: 0;
 `
 
