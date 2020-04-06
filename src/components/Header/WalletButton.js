@@ -4,6 +4,7 @@ import mq from '../../mediaQuery'
 
 import { GlobalConsumer } from '../../GlobalState'
 import Button from '../Forms/Button'
+import { UserProfileButton } from './SignInButton'
 import EtherScanLink from '../Links/EtherScanLink'
 import c from '../../colours'
 
@@ -40,6 +41,7 @@ const Link = styled('a')`
 `
 
 const CTAButton = styled(Button)`
+  min-width: 230px;
   font-weight: bold;
   width: 100%;
   ${mq.small`
@@ -52,7 +54,7 @@ function WalletButton() {
   const toggleMenu = () => setShowMenu(!showMenu)
   return (
     <GlobalConsumer>
-      {({ wallet, signIn, signOut, userAddress }) => {
+      {({ wallet, signIn, signOut, userAddress, loggedIn, userProfile }) => {
         if (!wallet) {
           return (
             <CTAButton type="light" onClick={signIn} analyticsId="Sign In">
@@ -60,26 +62,43 @@ function WalletButton() {
             </CTAButton>
           )
         }
+
         return (
           <WalletWrapper>
-            <Button type="light" onClick={toggleMenu}>
-              Connected with {wallet.name}
-            </Button>
+            <CTAButton type="light" onClick={toggleMenu}>
+              {loggedIn && userProfile ? (
+                <UserProfileButton userProfile={userProfile} />
+              ) : (
+                <>Manage your wallet</>
+              )}
+            </CTAButton>
             {showMenu ? (
               <Menu>
                 <List>
-                  <ListItem>
-                    <EtherScanLink address={userAddress}>
-                      {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
-                    </EtherScanLink>
-                  </ListItem>
+                  {userAddress && (
+                    <ListItem>
+                      <EtherScanLink address={userAddress}>
+                        {userAddress.slice(0, 6)}...{userAddress.slice(-4)}
+                      </EtherScanLink>
+                    </ListItem>
+                  )}
+                  {loggedIn && userProfile && (
+                    <ListItem>
+                      <Link
+                        href={`/user/${userProfile.username}`}
+                        rel="noopener noreferrer"
+                      >
+                        Open Profile
+                      </Link>
+                    </ListItem>
+                  )}
                   {wallet.type === 'sdk' && wallet.dashboard && (
                     <ListItem>
                       <Link
                         onClick={wallet.dashboard}
                         rel="noopener noreferrer"
                       >
-                        Open Dashboard
+                        Open {wallet.name}'s Dashboard
                       </Link>
                     </ListItem>
                   )}
@@ -102,7 +121,7 @@ function WalletButton() {
                         signOut()
                       }}
                     >
-                      Disconnect Wallet
+                      Disconnect {wallet.name}
                     </Link>
                   </ListItem>
                 </List>

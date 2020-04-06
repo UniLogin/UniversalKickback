@@ -14,7 +14,7 @@ const Account = styled(Link)`
 `
 const Username = styled('div')`
   max-width: 100px;
-  color: white;
+  color: #6e76ff;
   font-family: 'Muli';
   margin-right: 5px;
   font-size: 16px;
@@ -23,9 +23,9 @@ const Username = styled('div')`
   text-overflow: ellipsis;
 `
 
-const UserProfileButton = ({ userProfile }) => {
+export const UserProfileButton = ({ userProfile }) => {
   return (
-    <Account to={`/user/${userProfile.username}`}>
+    <Account>
       <Username data-testid="userprofile-name">{userProfile.username}</Username>
       <TwitterAvatar user={userProfile} size={10} scale={4} />
     </Account>
@@ -36,16 +36,12 @@ function SignInButton() {
   return (
     <GlobalConsumer>
       {({ userProfile, loggedIn, signIn, wallet }) => {
-        if (!wallet) return null
+        if (!wallet || (loggedIn && userProfile)) return null
         return (
           <>
-            {loggedIn && userProfile ? (
-              <UserProfileButton userProfile={userProfile} />
-            ) : (
-              <Button type="light" onClick={signIn} analyticsId="Sign In">
-                Sign in
-              </Button>
-            )}
+            <Button type="light" onClick={signIn} analyticsId="Sign In">
+              Sign in
+            </Button>
           </>
         )
       }}
