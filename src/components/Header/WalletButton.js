@@ -41,7 +41,7 @@ const Link = styled('a')`
 `
 
 const CTAButton = styled(Button)`
-  min-width: 230px;
+  min-width: 200px;
   font-weight: bold;
   width: 100%;
   ${mq.small`
@@ -88,7 +88,7 @@ function WalletButton() {
                         href={`/user/${userProfile.username}`}
                         rel="noopener noreferrer"
                       >
-                        Open Profile
+                        Kickback Profile
                       </Link>
                     </ListItem>
                   )}
@@ -98,7 +98,7 @@ function WalletButton() {
                         onClick={wallet.dashboard}
                         rel="noopener noreferrer"
                       >
-                        Open {wallet.name}'s Dashboard
+                        {wallet.name} Dashboard
                       </Link>
                     </ListItem>
                   )}
@@ -109,7 +109,7 @@ function WalletButton() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Open Wallet
+                        {wallet.name} Wallet
                       </Link>
                     </ListItem>
                   )}
@@ -121,7 +121,7 @@ function WalletButton() {
                         signOut()
                       }}
                     >
-                      Disconnect {wallet.name}
+                      Switch Wallet
                     </Link>
                   </ListItem>
                 </List>
