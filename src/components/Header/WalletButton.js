@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link as ReactLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import mq from '../../mediaQuery'
 
@@ -84,20 +85,14 @@ function WalletButton() {
                   )}
                   {loggedIn && userProfile && (
                     <ListItem>
-                      <Link
-                        href={`/user/${userProfile.username}`}
-                        rel="noopener noreferrer"
-                      >
+                      <ReactLink to={`/user/${userProfile.username}`}>
                         Kickback Profile
-                      </Link>
+                      </ReactLink>
                     </ListItem>
                   )}
                   {wallet.type === 'sdk' && wallet.dashboard && (
                     <ListItem>
-                      <Link
-                        onClick={wallet.dashboard}
-                        rel="noopener noreferrer"
-                      >
+                      <Link onClick={wallet.dashboard}>
                         {wallet.name} Dashboard
                       </Link>
                     </ListItem>

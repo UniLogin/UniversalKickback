@@ -47,10 +47,7 @@ function HamburgerMenu({ isMenuOpen }) {
                 </TrackedLink>
               )}
               {loggedIn && userProfile && (
-                <Link
-                  href={`/user/${userProfile.username}`}
-                  rel="noopener noreferrer"
-                >
+                <Link to={`/user/${userProfile.username}`}>
                   Kickback Profile
                 </Link>
               )}
