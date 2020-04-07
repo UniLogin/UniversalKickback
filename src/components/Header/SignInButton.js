@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Link } from 'react-router-dom'
 
 import { GlobalConsumer } from '../../GlobalState'
 import Button from '../Forms/Button'
 import TwitterAvatar from '../User/TwitterAvatar'
 
-const Account = styled(Link)`
+const Account = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
